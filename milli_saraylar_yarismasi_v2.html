@@ -1,0 +1,347 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=DM+Sans:wght@400;500&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --gold:#C9943A;--gold-light:#E8B96A;--gold-dim:#7A5820;
+  --bg:#0D1521;--bg2:#152030;--bg3:#1C2D42;
+  --text:#F0E6D0;--text2:#A89070;
+  --green-bg:#1A2E1A;--green-bd:#3A7A3A;--green-tx:#7EBB7E;
+  --red-bg:#2E1A1A;--red-bd:#7A3A3A;--red-tx:#BB7E7E;
+}
+#wrap{background:var(--bg);min-height:500px;border-radius:16px;padding:1.5rem;font-family:'DM Sans',sans-serif;color:var(--text);position:relative;overflow:hidden}
+#wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,148,58,.08),transparent);pointer-events:none}
+.ornament{color:var(--gold-dim);font-size:11px;letter-spacing:.15em;text-transform:uppercase;text-align:center;margin-bottom:.25rem}
+.title-main{font-family:'Playfair Display',Georgia,serif;font-size:24px;font-weight:700;color:var(--gold-light);text-align:center;letter-spacing:.02em}
+.divider{display:flex;align-items:center;gap:.75rem;margin:.75rem 0}
+.divider-line{flex:1;height:0.5px;background:linear-gradient(90deg,transparent,var(--gold-dim),transparent)}
+.divider-diamond{width:6px;height:6px;background:var(--gold);transform:rotate(45deg);flex-shrink:0}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:1.25rem}
+.info-card{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:10px;padding:.65rem .9rem;font-size:12.5px;line-height:1.7;color:var(--text2)}
+.info-card strong{color:var(--text);font-weight:500}
+.start-btn{display:block;margin:0 auto;background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#1A0F00;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:500;border:none;border-radius:10px;padding:.8rem 2.5rem;cursor:pointer;letter-spacing:.04em;transition:transform .15s,box-shadow .15s}
+.start-btn:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,148,58,.35)}
+.hdr{display:flex;justify-content:space-between;align-items:center;background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:12px;padding:.6rem 1rem;margin-bottom:1rem}
+.hdr-stat{text-align:center}
+.hdr-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:2px}
+.hdr-val{font-size:17px;font-weight:500;color:var(--gold-light)}
+.timer-ring{position:relative;width:54px;height:54px}
+.timer-ring svg{transform:rotate(-90deg)}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:500;color:var(--text)}
+.dots{display:flex;gap:5px;align-items:center;margin-top:3px}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--gold-dim);transition:background .3s}
+.dot.lit{background:#BB4444}
+.q-card{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:.85rem}
+.q-tag{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:.5rem}
+.q-text{font-family:'Playfair Display',Georgia,serif;font-size:15.5px;line-height:1.65;color:var(--text);font-weight:500}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.75rem}
+.opt{background:var(--bg3);border:0.5px solid rgba(201,148,58,.25);border-radius:10px;padding:.65rem .85rem;font-size:13px;line-height:1.4;color:var(--text2);cursor:pointer;text-align:left;font-family:'DM Sans',sans-serif;transition:all .18s;position:relative}
+.opt:hover:not(:disabled){background:rgba(201,148,58,.1);border-color:var(--gold);color:var(--text)}
+.opt.correct{background:var(--green-bg)!important;border-color:var(--green-bd)!important;color:var(--green-tx)!important}
+.opt.wrong{background:var(--red-bg)!important;border-color:var(--red-bd)!important;color:var(--red-tx)!important}
+.opt:disabled{cursor:default}
+.opt-letter{display:inline-block;width:18px;height:18px;border-radius:4px;background:rgba(201,148,58,.15);border:0.5px solid var(--gold-dim);font-size:10px;font-weight:500;color:var(--gold-dim);text-align:center;line-height:18px;margin-right:6px;vertical-align:middle;flex-shrink:0}
+.feedback{border-radius:10px;padding:.6rem 1rem;font-size:13px;font-weight:500;margin-bottom:.6rem;text-align:center}
+.feedback.ok{background:var(--green-bg);border:0.5px solid var(--green-bd);color:var(--green-tx)}
+.feedback.nope{background:var(--red-bg);border:0.5px solid var(--red-bd);color:var(--red-tx)}
+.footer-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.joker-lbl{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text2);margin-bottom:5px}
+.jbtns{display:flex;gap:.4rem}
+.jbtn{background:var(--bg3);border:0.5px solid var(--gold-dim);border-radius:8px;padding:.4rem .65rem;font-size:12px;color:var(--gold);font-family:'DM Sans',sans-serif;cursor:pointer;transition:all .15s}
+.jbtn:hover:not(:disabled){background:rgba(201,148,58,.12);border-color:var(--gold)}
+.jbtn:disabled{opacity:.25;cursor:default}
+.next-btn{background:linear-gradient(135deg,var(--gold),var(--gold-light));color:#1A0F00;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;border:none;border-radius:9px;padding:.55rem 1.2rem;cursor:pointer;transition:transform .12s;white-space:nowrap}
+.next-btn:hover{transform:translateY(-1px)}
+.next-btn:disabled{opacity:.3;cursor:default}
+.penalty{background:var(--red-bg);border:0.5px solid var(--red-bd);border-radius:8px;padding:.35rem .7rem;font-size:11.5px;color:var(--red-tx);margin-bottom:.5rem}
+.end-card{background:var(--bg2);border:0.5px solid var(--gold-dim);border-radius:14px;padding:1.25rem;margin:1rem 0}
+.end-score{font-family:'Playfair Display',Georgia,serif;font-size:52px;font-weight:700;color:var(--gold-light);text-align:center;line-height:1}
+.end-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:0.5px solid rgba(201,148,58,.15);font-size:13px}
+.end-row:last-child{border:none}
+.medal{text-align:center;font-size:13px;color:var(--text2);margin:.75rem 0;line-height:1.6}
+#progress-bar-wrap{height:3px;background:var(--bg3);border-radius:2px;margin-bottom:.75rem;overflow:hidden}
+#progress-bar{height:100%;background:linear-gradient(90deg,var(--gold-dim),var(--gold));border-radius:2px;transition:width .4s}
+</style>
+
+<div id="wrap">
+  <div id="start-screen">
+    <div class="ornament">✦ &nbsp; Milli Saraylar &nbsp; ✦</div>
+    <div class="title-main">Bilgi Yarışması</div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+    <div class="info-grid">
+      <div class="info-card"><strong>20 soru</strong><br>Her turda karışık</div>
+      <div class="info-card"><strong>60 saniye</strong><br>Her soru için</div>
+      <div class="info-card"><strong>3 joker</strong><br>50:50 · Pas · +15sn</div>
+      <div class="info-card"><strong>Dikkat!</strong><br>3 yanlış + joker bitti → <strong style="color:#BB7E7E">45 sn</strong></div>
+    </div>
+    <button class="start-btn" onclick="startGame()">Yarışmaya Başla</button>
+  </div>
+
+  <div id="game-screen" style="display:none">
+    <div id="progress-bar-wrap"><div id="progress-bar" style="width:5%"></div></div>
+    <div class="hdr">
+      <div class="hdr-stat">
+        <div class="hdr-lbl">Soru</div>
+        <div class="hdr-val" id="q-counter">1/20</div>
+      </div>
+      <div class="hdr-stat">
+        <div class="hdr-lbl">Puan</div>
+        <div class="hdr-val" id="score-disp">0</div>
+      </div>
+      <div class="timer-ring">
+        <svg width="54" height="54" viewBox="0 0 54 54">
+          <circle cx="27" cy="27" r="22" fill="none" stroke="rgba(201,148,58,.15)" stroke-width="4"/>
+          <circle id="timer-arc" cx="27" cy="27" r="22" fill="none" stroke="#C9943A" stroke-width="4"
+            stroke-dasharray="138.23" stroke-dashoffset="0" stroke-linecap="round"/>
+        </svg>
+        <div class="timer-num" id="timer-num">60</div>
+      </div>
+      <div class="hdr-stat">
+        <div class="hdr-lbl">Yanlış</div>
+        <div class="dots"><span class="dot" id="w0"></span><span class="dot" id="w1"></span><span class="dot" id="w2"></span></div>
+      </div>
+      <div class="hdr-stat">
+        <div class="hdr-lbl">Doğru</div>
+        <div class="hdr-val" id="correct-disp">0</div>
+      </div>
+    </div>
+
+    <div id="penalty-notice" class="penalty" style="display:none">⚠ Süre 45 saniyeye düştü!</div>
+
+    <div class="q-card">
+      <div class="q-tag" id="q-tag">Soru 1 / 20</div>
+      <div class="q-text" id="q-text"></div>
+    </div>
+
+    <div class="opts" id="options"></div>
+    <div id="feedback-box" style="display:none" class="feedback"></div>
+
+    <div class="footer-row">
+      <div>
+        <div class="joker-lbl">Jokerler</div>
+        <div class="jbtns">
+          <button class="jbtn" id="j50" onclick="joker50()">50:50</button>
+          <button class="jbtn" id="jpass" onclick="jokerPass()">Pas</button>
+          <button class="jbtn" id="jtime" onclick="jokerTime()">+15 sn</button>
+        </div>
+      </div>
+      <button class="next-btn" id="next-btn" onclick="nextQuestion()" style="display:none">Sonraki →</button>
+    </div>
+  </div>
+
+  <div id="end-screen" style="display:none">
+    <div class="ornament">✦ &nbsp; Sonuç &nbsp; ✦</div>
+    <div class="title-main">Yarışma Bitti</div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-diamond"></div><div class="divider-line"></div></div>
+    <div class="end-card">
+      <div class="end-score" id="final-score">0</div>
+      <div style="text-align:center;font-size:12px;color:var(--text2);margin-bottom:1rem;margin-top:4px">toplam puan</div>
+      <div class="end-row"><span style="color:var(--text2)">Doğru cevap</span><span id="r-correct" style="color:var(--green-tx);font-weight:500"></span></div>
+      <div class="end-row"><span style="color:var(--text2)">Yanlış cevap</span><span id="r-wrong" style="color:var(--red-tx);font-weight:500"></span></div>
+      <div class="end-row"><span style="color:var(--text2)">Pas</span><span id="r-pass" style="color:var(--text2)"></span></div>
+    </div>
+    <div class="medal" id="medal-text"></div>
+    <div style="text-align:center"><button class="start-btn" onclick="restartGame()" style="padding:.7rem 2rem;font-size:14px">Tekrar Oyna</button></div>
+  </div>
+</div>
+
+<script>
+const LETTERS=['A','B','C','D'];
+const ALL_Q=[
+  {q:"Türk müzeciliğinin kurucusu olarak kabul edilen ve Müze-i Hümayun'u dünya standartlarına taşıyan kişi kimdir?",opts:["Osman Hamdi Bey","Fethi Ahmed Paşa","Edward Goold","Necdet Sakaoğlu"],ans:0},
+  {q:"Modern anlamda Türk müzeciliğinin temellerini atan, Aya İrini'deki ilk koleksiyonu oluşturan kişi kimdir?",opts:["Osman Hamdi Bey","Tophane Müşiri Fethi Ahmed Paşa","Edward Goold","Sultan Abdülmecid"],ans:1},
+  {q:"1884'te çıkarılan ve tarihi eserlerin yurt dışına çıkarılmasını yasaklayan kanunun adı nedir?",opts:["Hümayun Fermanı","Tanzimat Fermanı","Asar-ı Atika Nizamnamesi","Kültür Miras Kanunu"],ans:2},
+  {q:"Milli Saraylar İdaresi Başkanlığı hangi kuruluşa bağlıdır?",opts:["Kültür ve Turizm Bakanlığı","TBMM","T.C. Cumhurbaşkanlığı","Milli Eğitim Bakanlığı"],ans:2},
+  {q:"Dolmabahçe Sarayı hangi padişah tarafından yaptırılmıştır?",opts:["Sultan Abdülaziz","Sultan Abdülmecid","Sultan II. Mahmud","Sultan II. Abdülhamid"],ans:1},
+  {q:"Dolmabahçe Muayede Salonu'ndaki ünlü kristal avize hangi ülkeden hediye edilmiştir?",opts:["Fransa","Almanya","İngiltere (Kraliçe Victoria)","Avusturya"],ans:2},
+  {q:"Topkapı Sarayı hangi padişah tarafından 1460'lı yıllarda yaptırılmaya başlanmıştır?",opts:["Yavuz Sultan Selim","Kanuni Sultan Süleyman","Fatih Sultan Mehmed","Sultan II. Beyazıt"],ans:2},
+  {q:"Topkapı Sarayı'nın Kutsal Emanetler Dairesi'nde günde kaç saat Kuran okunmaktadır?",opts:["8 saat","16 saat","12 saat","24 saat"],ans:3},
+  {q:"Yıldız Sarayı'nı ağırlıklı olarak kullanan ve kompleksi büyüten padişah kimdir?",opts:["Sultan Abdülmecid","Sultan Abdülaziz","Sultan II. Abdülhamid","Sultan III. Selim"],ans:2},
+  {q:"Yıldız Sarayı'nın baş mimarı kimdir?",opts:["Sarkis Balyan","Nigoğos Balyan","Raimondo d'Aronco","Karabet Balyan"],ans:2},
+  {q:"Beylerbeyi Sarayı hangi mimarlar tarafından inşa edilmiştir?",opts:["Karabet ve Nigoğos Balyan","Sarkis ve Agop Balyan","d'Aronco ve Sarkis Balyan","Nigoğos ve Sarkis Balyan"],ans:1},
+  {q:"Çırağan Sarayı'nın inşası hangi padişah döneminde tamamlanmıştır?",opts:["Sultan Abdülmecid","Sultan II. Abdülhamid","Sultan Abdülaziz","Sultan III. Selim"],ans:2},
+  {q:"Küçüksu Kasrı'nın mimarı kimdir?",opts:["Karabet Balyan","Sarkis Balyan","Nigoğos Balyan","Raimondo d'Aronco"],ans:2},
+  {q:"Çeşmibülbül cam tekniğini öğrenmek için III. Selim'in Venedik'e gönderdiği kişi kimdir?",opts:["Müslihiddin","Mehmet Dede (Mevlevi dervişi)","Abraham Paşa","Eflâkî Dede"],ans:1},
+  {q:"Milli Saraylar Resim ve Heykel Müzesi hangi yılda ziyarete açılmıştır?",opts:["2010","2012","2014","2016"],ans:2},
+  {q:"Enderun'un temel insan kaynağı nereden sağlanırdı?",opts:["Müslüman ailelerden","Yeniçeri ocağından","Devşirme sistemiyle Hristiyan çocuklardan","Esnaf loncalarından"],ans:2},
+  {q:"Hereke Halı Dokuma Fabrikası hangi yılda kurulmuştur?",opts:["1826","1843","1871","1884"],ans:1},
+  {q:"MİSAD hangi yılda uluslararası hakemli dergi statüsüne kavuşmuştur?",opts:["2010","2015","2019","2022"],ans:2},
+  {q:"Türkiye'nin UNESCO Dünya Mirası listeye ilk girişi hangi yıldır?",opts:["1983","1985","1988","1990"],ans:1},
+  {q:"Ankara Etnografya Müzesi hangi yılda hizmete girmiştir?",opts:["1923","1925","1927","1930"],ans:2},
+  {q:"Göbeklitepe UNESCO Dünya Mirası listesine hangi yılda girmiştir?",opts:["2014","2016","2018","2021"],ans:2},
+  {q:"Bağdat Köşkü hangi yüzyılın Osmanlı mimarisini temsil eder?",opts:["15. yüzyıl","16. yüzyıl","17. yüzyıl","18. yüzyıl"],ans:2},
+  {q:"Mimar Sinan'ın 'Ustalık eserim' dediği cami hangisidir?",opts:["Süleymaniye Camii","Şehzade Camii","Selimiye Camii","Sultan Ahmet Camii"],ans:2},
+  {q:"İshak Paşa Sarayı kaç yılda tamamlanmıştır?",opts:["25 yıl","50 yıl","75 yıl","99 yıl"],ans:3},
+  {q:"Edirne Sarayı'nın yedi katlı kule-köşkünün adı nedir?",opts:["Bağdat Köşkü","Kum Kasrı","Cihannüma Kasrı","Revan Köşkü"],ans:2},
+  {q:"Dolmabahçe Sarayı'nın mimari üslubu nasıl nitelendirilebilir?",opts:["Gotik","Neoklasik","Eklektik (seçmeci)","Saf Barok"],ans:2},
+  {q:"Beykoz Cam ve Billur Müzesi kütüphanesinde kaç eser bulunmaktadır?",opts:["200","400","600","800"],ans:2},
+  {q:"İslam Medeniyetleri Müzesi hangi külliyenin içindedir?",opts:["Süleymaniye Külliyesi","Büyük Çamlıca Camii Külliyesi","Dolmabahçe Sarayı","Topkapı Sarayı"],ans:1},
+  {q:"Milli Saraylar İdaresi'nin mevcut Başkanı kimdir?",opts:["Saadettin Ökten","Prof. Dr. Ahmet Çapoğlu","Dr. Yasin Yıldız","Abdülhamit Tüfekçioğlu"],ans:2},
+  {q:"Yalova Atatürk Köşkü hangi mimar tarafından tasarlanmıştır?",opts:["Vedat Tek","Kemalettin Bey","Seyfi Arkan","Raimondo d'Aronco"],ans:2},
+];
+
+function shuffle(a){return a.slice().sort(()=>Math.random()-.5)}
+
+let questions,qi,score,correct,wrongCount,passed,jokers,timeLeft,maxTime,timer,answered,penaltyActive;
+
+function startGame(){
+  questions=shuffle(ALL_Q).slice(0,20);
+  qi=0;score=0;correct=0;wrongCount=0;passed=0;
+  jokers={j50:1,jpass:1,jtime:1};
+  penaltyActive=false;
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('end-screen').style.display='none';
+  document.getElementById('game-screen').style.display='block';
+  document.getElementById('penalty-notice').style.display='none';
+  updateDots();loadQuestion();
+}
+
+function loadQuestion(){
+  answered=false;
+  const q=questions[qi];
+  const pct=((qi+1)/20*100).toFixed(0);
+  document.getElementById('progress-bar').style.width=pct+'%';
+  document.getElementById('q-counter').textContent=(qi+1)+'/20';
+  document.getElementById('q-tag').textContent='Soru '+(qi+1)+' / 20';
+  document.getElementById('q-text').textContent=q.q;
+  document.getElementById('score-disp').textContent=score;
+  document.getElementById('correct-disp').textContent=correct;
+  document.getElementById('feedback-box').style.display='none';
+  document.getElementById('next-btn').style.display='none';
+  const optsDiv=document.getElementById('options');
+  optsDiv.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='opt';
+    btn.innerHTML=`<span class="opt-letter">${LETTERS[i]}</span>${opt}`;
+    btn.dataset.i=i;btn.onclick=()=>choose(i);
+    optsDiv.appendChild(btn);
+  });
+  updateJokers();
+  maxTime=penaltyActive?45:60;
+  timeLeft=maxTime;
+  startTimer();
+}
+
+function startTimer(){
+  clearInterval(timer);updateTimerUI();
+  timer=setInterval(()=>{timeLeft--;updateTimerUI();if(timeLeft<=0){clearInterval(timer);timeExpired();}},1000);
+}
+
+function updateTimerUI(){
+  const pct=timeLeft/maxTime;
+  const circ=138.23;
+  const arc=document.getElementById('timer-arc');
+  arc.setAttribute('stroke-dashoffset',circ*(1-pct));
+  const clr=pct>.5?'#C9943A':pct>.25?'#C97A3A':'#C94040';
+  arc.setAttribute('stroke',clr);
+  document.getElementById('timer-num').textContent=timeLeft;
+}
+
+function timeExpired(){
+  if(answered)return;
+  answered=true;wrongCount++;updateDots();
+  showFeedback(false,'Süre doldu!  Doğru: '+questions[qi].opts[questions[qi].ans]);
+  highlightAnswer(-1,questions[qi].ans);
+  checkPenalty();showNext();
+}
+
+function choose(i){
+  if(answered)return;
+  answered=true;clearInterval(timer);
+  const q=questions[qi];
+  const ok=i===q.ans;
+  if(ok){score+=Math.max(10,timeLeft*2);correct++;}
+  else{wrongCount++;updateDots();checkPenalty();}
+  document.getElementById('score-disp').textContent=score;
+  document.getElementById('correct-disp').textContent=correct;
+  showFeedback(ok,ok?'Doğru!  +'+Math.max(10,timeLeft*2)+' puan':'Yanlış.  Doğru: '+q.opts[q.ans]);
+  highlightAnswer(i,q.ans);showNext();
+}
+
+function highlightAnswer(chosen,cor){
+  document.querySelectorAll('.opt').forEach((btn,i)=>{
+    btn.disabled=true;
+    if(i===cor)btn.classList.add('correct');
+    else if(i===chosen&&chosen!==cor)btn.classList.add('wrong');
+  });
+}
+
+function showFeedback(ok,msg){
+  const fb=document.getElementById('feedback-box');
+  fb.style.display='block';fb.textContent=msg;
+  fb.className='feedback '+(ok?'ok':'nope');
+}
+
+function showNext(){document.getElementById('next-btn').style.display='block';}
+
+function nextQuestion(){
+  qi++;
+  if(qi>=questions.length){endGame();return;}
+  loadQuestion();
+}
+
+function checkPenalty(){
+  if(!penaltyActive&&wrongCount>=3&&!jokers.j50&&!jokers.jpass&&!jokers.jtime){
+    penaltyActive=true;
+    document.getElementById('penalty-notice').style.display='block';
+  }
+}
+
+function updateDots(){
+  [0,1,2].forEach(i=>{
+    document.getElementById('w'+i).className='dot'+(i<wrongCount?' lit':'');
+  });
+}
+
+function updateJokers(){
+  document.getElementById('j50').disabled=!jokers.j50||answered;
+  document.getElementById('jpass').disabled=!jokers.jpass||answered;
+  document.getElementById('jtime').disabled=!jokers.jtime||answered;
+}
+
+function joker50(){
+  if(!jokers.j50||answered)return;
+  jokers.j50=0;
+  const q=questions[qi];
+  const btns=[...document.querySelectorAll('.opt')];
+  let rem=0;
+  btns.forEach((btn,i)=>{if(i!==q.ans&&rem<2){btn.disabled=true;btn.style.opacity='.2';rem++;}});
+  checkPenalty();updateJokers();
+}
+
+function jokerPass(){
+  if(!jokers.jpass||answered)return;
+  jokers.jpass=0;answered=true;clearInterval(timer);passed++;
+  showFeedback(true,'Pas geçildi.');showNext();checkPenalty();updateJokers();
+}
+
+function jokerTime(){
+  if(!jokers.jtime||answered)return;
+  jokers.jtime=0;
+  timeLeft=Math.min(timeLeft+15,maxTime);
+  checkPenalty();updateJokers();
+}
+
+function endGame(){
+  clearInterval(timer);
+  document.getElementById('game-screen').style.display='none';
+  document.getElementById('end-screen').style.display='block';
+  document.getElementById('final-score').textContent=score;
+  document.getElementById('r-correct').textContent=correct+' / 20';
+  document.getElementById('r-wrong').textContent=wrongCount+' kez';
+  document.getElementById('r-pass').textContent=passed+' kez';
+  const pct=correct/20;
+  let m='';
+  if(pct>=.9)m='Muhteşem! Milli Saraylar\'ın gizli uzmanısınız.';
+  else if(pct>=.75)m='Çok iyi! Saraylar ve müzecilik konusunda derin bilginiz var.';
+  else if(pct>=.55)m='İyi bir başlangıç! Biraz daha çalışmayla zirvede olursunuz.';
+  else m='Devam edin — her deneme sizi güçlendirir!';
+  document.getElementById('medal-text').textContent=m;
+}
+
+function restartGame(){
+  document.getElementById('end-screen').style.display='none';
+  startGame();
+}
+</script>
