@@ -1,0 +1,14 @@
+#EXTM3U
+#PLAYLIST:Anten Dizisi | سریال آنتن
+
+#EXTINF:2822 tvg-logo="https://i.ytimg.com/vi/c7V9fg-Zryw/mqdefault.jpg",Anten Dizisi - 1. Bölüm
+#EXTVLCOPT:sub-file=https://cdn.jsdelivr.net/gh/tarihcituranx/s-nav@main/episode1_tr.vtt
+https://youtu.be/c7V9fg-Zryw
+
+#EXTINF:3243 tvg-logo="https://i.ytimg.com/vi/-jvmyg0cgB0/mqdefault.jpg",Anten Dizisi - 2. Bölüm
+#EXTVLCOPT:sub-file=https://cdn.jsdelivr.net/gh/tarihcituranx/s-nav@main/episode2_tr.vtt
+https://youtu.be/-jvmyg0cgB0
+
+#EXTINF:2673 tvg-logo="https://i.ytimg.com/vi/4ksYp3VSZiI/mqdefault.jpg",Anten Dizisi - 3. Bölüm
+#EXTVLCOPT:sub-file=https://cdn.jsdelivr.net/gh/tarihcituranx/s-nav@main/episode3_tr.vtt
+https://youtu.be/4ksYp3VSZiI
